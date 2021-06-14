@@ -1,2 +1,15 @@
-\section{Data Collection}
+\section{Impact of Language and Improvised Settings}
 \label{sec:data}
+Training and validating models for research is usually done on the same dataset. This leads to solid proof-of-concept models, but can lead to models that do not generalize well to real world scenarios. There is also another aspect of robustness of FER models against speech we have not touched on yet, which is the language dimension. We want to provide a platform to test our models against a different language, to see if this modality impacts performance. Another point to note is that the datasets we used are scripted and acted. Real world situations are not as rigid and more closely follow speech acts.
+
+In this section we will present our approach to build a small German database along the lines of RAVDESS, and collect videos of speech-acts that more closely resemble those of real world scenarios to later validate our models on them.
+
+\subsection{German RAVDESS}
+
+The lexical content of RAVDESS is kept simple. The actors speak two easy to pronounce sentences in eight emotions. We replicate this by switching the English sentences for German counterparts. We chose "Die Katze sitzt auf dem Sofa" and "Die Kinder spielen im Garten", two sentences with eight syllables and commonly used words. 
+
+Recordings were done using the TAWNY recording tool \cite{tawny2021}. The actors were given a general description of the task before starting their session. Before each individual recording the actors were given the target sentence and emotion, alongside an example from the RAVDESS dataset.
+
+14 actors participated, 8 female and 6 male. TODO: total recordings etc
+
+\subsection{Real World Speech Acts}

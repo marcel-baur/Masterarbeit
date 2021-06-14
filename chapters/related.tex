@@ -1,5 +1,6 @@
-\section{Related Work}
+\section{Background and Related Work}
 \label{sec:related}
+
 \subsection{Artificial Intelligence Techniques - Neural Networks}
 \label{sub:aiml}
 In this section we will describe common Artificial Intelligence (AI) techniques used in models for  facial expression recognition (Section \ref{sub:rw_fer}).
@@ -64,6 +65,7 @@ A concrete implementation for a temporal recurrent layer are \emph{Gated Recurre
 
 
 \subsubsection{Architectures}
+NNs can be built in various different ways. Over time, researchers have developed predifined structures of NNs which are reused for many different applicaitons. These different structures are more commonly referred to as \emph{architecutres}. In this thesis we will come across the two well known architectures \emph{VGG} and \emph{MobileNet}.
 \paragraph{VGG}
 Introduced by Simonyan and Zisserman in 2014 \cite{simonyan2015vgg}, VGG16 and VGG19 have established themselves as architectures for image classification, including facial expression recognition. VGG16 achieved top-5 finishes in the 2014 ImageNet Challenge in both localisation and classification tasks. A major drawback to models using the VGG architecture is its computing performance. Given its rather large architecture, it is comparatively slow to train. This is where we turn to \emph{MobileNets}.
 \paragraph{MobileNet}
@@ -72,19 +74,21 @@ Introduced by Simonyan and Zisserman in 2014 \cite{simonyan2015vgg}, VGG16 and V
 
 \subsection{Emotional Models from Facial Expression}
 \label{sub:rw_fer}
-\subsubsection{Categorical Model}
+We now need a way to leverage the tools we mentioned above to build models that accurately estimate the affective state. Ekman, Russell, Posner and many others have developed systems that rigidly define the emotional state of a subject. While dimensional models, which define the affective state through several dimensions, we will focus on the \emph{categorical model} that works on emotional classes. 
+
+\paragraph{Categorical Model}
 One of the most recognized ways to separate emotional states in non-verbal communication is presented by Paul Ekman \cite{ekman1987universals} \cite{ekman2013emotion}. His research postulates a cross-cultural agreement in judging facial expressions \cite{ekman1987universals}. Basic emotion theory assumes a fixed amount of human emotions, which is also believed and postulated by Ekman and Russell \cite{ekman1992basic} \cite{russell2006}. Ekman proposes a split into seven categories: anger, happiness, surprise, sadness, fear, disgust and contempt. He later consolidated them down to six, removing contempt. 
 
-\subsubsection{Dimensional Model}
+% \subsubsection{Dimensional Model}
 
-Dimensional systems use a set of dimensions, \emph{valence}, \emph{arousal} and in some cases \emph{dominance} to estimate the affective state of a person. James A. Russell introduced the two dimensional circumplex model of affect \cite{russell1980circumplex}, where he mapped emotions in the valence-arousal space. Valence represents the (un-)pleasantness of an affective state, and arousal represents the activation. \cite{posner2005circumplex}. The emotions from the categorical have their place in this dimensional field, e.g. happy having a high score for valence and arousal.
+% Dimensional systems use a set of dimensions, \emph{valence}, \emph{arousal} and in some cases \emph{dominance} to estimate the affective state of a person. James A. Russell introduced the two dimensional circumplex model of affect \cite{russell1980circumplex}, where he mapped emotions in the valence-arousal space. Valence represents the (un-)pleasantness of an affective state, and arousal represents the activation. \cite{posner2005circumplex}. The emotions from the categorical have their place in this dimensional field, e.g. happy having a high score for valence and arousal.
 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.8\textwidth]{res/circumplex.png}
-    \caption{The circumplex model of affect with the valence and arousal axis with selected emotions. \cite{russell1980circumplex} \cite{pourmirzaei2021an}}
-    \label{fig:circumplexImg}
-\end{figure}
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{res/circumplex.png}
+%     \caption{The circumplex model of affect with the valence and arousal axis with selected emotions. \cite{russell1980circumplex} \cite{pourmirzaei2021an}}
+%     \label{fig:circumplexImg}
+% \end{figure}
 
 \subsubsection{Action Units}
 \label{subsub:au}
@@ -127,62 +131,12 @@ The content of an act of speech can be segmented into words, syllables, and \emp
 
 Visemes are particularly interesting for us, since our research is purely based in the visual domain. Differences between phonemes that are purely audiocentric are of no relevance for us. A viseme mapping reduces the categories for visually based lexical content, which makes building and training models easier.
 
-\subsection{Datasets}
-Datasets are of vital importance when training FER models. There are many datasets that are up for the task, providing different modalities and labels. In this section we will present datasets that have been relevant to our research.
-
-\subsubsection{AffectNet}
-\emph{AffectNet} is one of the largest image databases for affect. It consists of around 450,000 manually annotated images. Labellers classified them by eight emotional categories (Neutral, Happy, Sad, Surprise, Fear, Anger, Disgust, Contempt) while also providing continuous labels for valence and arousal. In addition to the labelled images, 1,000,000 images with facial landmarks are provided.
-
-The images were collected by scraping the internet through querying various search engines. Faces were recognized with the \emph{OpenCV} toolkit. Facial landmarks were extracted with regression of binary features \cite{ren2014face}.
-
-Labelling the 450,000 images was done by 12 full-time and part-time annotators who were knowledgeable on the issues of emotion and affect, and were specifically hired for the task. This was done to remove the issue of low-quality labels that occur with crowd-sourced methods. \cite{mollahosseini2017affectnet}
-
-Our classic FER models we will use are all trained on AffectNet.
-
-\subsubsection{RAVDESS}
-\label{sub:ravdess}
-The Ryerson Audio-Visual Database of Emotional Speech and Song (RAVDESS) is a validated multimodal database for emotional analysis \cite{livingstone2018ryerson}. It contains videos of speech and song from 24 professional actors. The database is gender balanced, and the actors were chosen with the ability of speaking a neutral North American accent. The database contains videos in eight emotions (Calm, Happy, Sad, Angry, Fearful, Surprise, Disgust, Neutral) in the speech acts, which are the important ones for us.
-
-The actors were tasked with speaking two pre-defined sentences ("Dogs are sitting by the door", "Kids are talking by the door") in the given emotions, across two levels of intensity. Across all actors, 1440 audio-visual files of speech acts were recorded. Audio- and video-only files are provided as well.
-
-RAVDESS lends itself very well to our research by including all core emotions and providing high quality footage. It also standardizes statements and lexical content, which lowers the amount of external factors that could influence our analysis and training. We focus our attention to the core emotions that are described by Ekman, which means that we ignored the videos for the calm emotion.
-
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\textwidth]{res/img_ravdess_example_neutral_14AY1.png}
-    \caption{A frame of a video from the RAVDESS database \cite{livingstone2018ryerson}. Actor 14 is pronouncing the phoneme \texttt{AY1} in a neutral emotion.}
-    \label{fig:ravdess_example}
+    \includegraphics[width=0.8\textwidth]{res/phoneme.png}
+    \caption{A visual example of three phonemes being spoken, together with their occurrence in a sentence.}
+    \label{fig:phoneme_ex}
 \end{figure}
-
-\subsubsection{CREMA-D}
-The Crowd-sourced Emotional Multi-modal Actors Database (CREMA-D) is a labelled multimodal for emotional analysis \cite{cao2014crema}. It contains 7,442 videos of speech acts from 91 actors of varying age and ethnicity. The database includes videos across seven emotions (Calm, Happy, Sad, Angry, Fearful, Disgust, Neutral) with scaled intensities. Surprised is notably missing from the emotional categories. The authors state that "surprise was not considered by the acting directors to be sufficiently specific, as it could relate to any of the other emotions with rapid onset" \cite{cao2014crema}. 
-
-The authors also provided the individual ratings for each video, which were collected from 2,443 crowd-sourced raters. These can also be used to analyse human bias in emotion recognition (see Section \ref{sec:human}).
-
-\subsubsection{MSP-IMPROV}
-MSP-IMPROV is an acted multimodal database for emotional analysis \cite{busso2016msp}. It covers four emotions (Anger, Happiness, Sadness, Neutral), where twelce actors (6 male, 6 female) were tasked to speak 15 different statements. While recording, the actors were set in different scenarios, in which the target sentences were included. Only the target sentence had to be spoken word-for-word, the buildup to the scenario was open to improvisation.
-
-652 recordings are provided on the target sentences. The authors also provide the statements on the entire improvised session, where 4,381 speaking turns are collected. 2,785 speaking turns were collected on natural interactions, where the actors were speaking normally to each other, outside of a scripted or improvised session. 620 turns were recorded on the target sentences alone, where the actors were tasked to read the statements in the provided emotion. This sums up the size of the MSP-IMPROV corpus to 7,818 recordings. 
-
-\subsubsection{IEMOCAP}
-The interactive emotional dyadic motion capture database (IEMOCAP) \cite{busso2008iemocap} is a labelled database based on dyadic interaction where one of the subjects is set up with motion capture software on their head, face and wrists. It is based on two types of interactions, acted and improvised.
-
-The database is gender balanced, with 5 male and female actors each. The actors were students from the Drama Department of the University of Southern California.
-
-The data was annotated by USC students. They labelled the utterances based on categorical expression (Neutral, Happiness, Sadness, Anger, Surprise, Fear, Disgust, Frustration, Excited, Other) and dimensional values for activation, valence, and dominance.
-
-In total, 5,255 scripted turns and 4,784 improvised turns were recorded. 
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.8\textwidth]{res/iemocap.png}
-    \caption{The motion capture points of IEMOCAP. They cover 53 points on the face, a wristband with two markers, one marker for each hand, and a headband with two markers. \cite{busso2008iemocap}}
-    \label{fig:iemocap_cap}
-\end{figure}
-
-\subsection{Models and Tools}
-
-We will use several pre-trained models and tools in this thesis. In this section, we will present the most important ones in more detail.
 
 \subsubsection{LipNet}
 
@@ -234,8 +188,8 @@ We will use the MFA to align our datasets and to get a precise phoneme-to-video 
     \caption{A pipeline of a classic use of the MFA. An audio file, together with its transcript gets fed into the MFA. The output of the aligner is a \texttt{TextGrid} file that contains timestamp information about word and phoneme occurrence in the input audio file.}
     \label{fig:mfa}
 \end{figure}
-
-\subsection{Existing Models}
+\subsection{Existing Approaches to Compensate Speech Effects}
+\label{sec:existing}
 There have already been advances in FER that accounts for speech. In this section, we will present three models that will be relevant to our work.
 
 \subsubsection{Blind Lexical Compensation}
@@ -283,4 +237,60 @@ We will use a similar feature extractor in our experiments. Since Salman and Bus
     \includegraphics[width=0.8\textwidth]{res/BussoSE.pdf}
     \caption{The schemal of Salman and Busso's lexical compensator. An emotional mesh is the input to a NN, producing a neutral output mesh alongside a phoneme prediction. The difference of the input mesh and the output mesh extracts the facial movements that are produced by the emotional state of the subject.}
     \label{fig:bussose}
+\end{figure}
+
+\subsubsection{Temporal Compensation}
+The previous two models both used a temporal approach alongside their efforts of lexical compensation. Opposed to the more traditional way of FER where only single images were classified, a temporal model estimates the emotion on a sequence of images. 
+
+
+\subsection{Datasets}
+
+\subsubsection{AffectNet}
+\emph{AffectNet} is one of the largest image databases for affect. It consists of around 450,000 manually annotated images. Labellers classified them by eight emotional categories (Neutral, Happy, Sad, Surprise, Fear, Anger, Disgust, Contempt) while also providing continuous labels for valence and arousal. In addition to the labelled images, 1,000,000 images with facial landmarks are provided.
+
+The images were collected by scraping the internet through querying various search engines. Faces were recognized with the \emph{OpenCV} toolkit. Facial landmarks were extracted with regression of binary features \cite{ren2014face}.
+
+Labelling the 450,000 images was done by 12 full-time and part-time annotators who were knowledgeable on the issues of emotion and affect, and were specifically hired for the task. This was done to remove the issue of low-quality labels that occur with crowd-sourced methods. \cite{mollahosseini2017affectnet}
+
+Our classic FER models we will use are all trained on AffectNet.
+
+\subsubsection{RAVDESS}
+\label{sub:ravdess}
+The Ryerson Audio-Visual Database of Emotional Speech and Song (RAVDESS) is a validated multimodal database for emotional analysis \cite{livingstone2018ryerson}. It contains videos of speech and song from 24 professional actors. The database is gender balanced, and the actors were chosen with the ability of speaking a neutral North American accent. The database contains videos in eight emotions (Calm, Happy, Sad, Angry, Fearful, Surprise, Disgust, Neutral) in the speech acts, which are the important ones for us.
+
+The actors were tasked with speaking two pre-defined sentences ("Dogs are sitting by the door", "Kids are talking by the door") in the given emotions, across two levels of intensity. Across all actors, 1440 audio-visual files of speech acts were recorded. Audio- and video-only files are provided as well.
+
+RAVDESS lends itself very well to our research by including all core emotions and providing high quality footage. It also standardizes statements and lexical content, which lowers the amount of external factors that could influence our analysis and training. We focus our attention to the core emotions that are described by Ekman, which means that we ignored the videos for the calm emotion.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{res/img_ravdess_example_neutral_14AY1.png}
+    \caption{A frame of a video from the RAVDESS database \cite{livingstone2018ryerson}. Actor 14 is pronouncing the phoneme \texttt{AY1} in a neutral emotion.}
+    \label{fig:ravdess_example}
+\end{figure}
+
+\subsubsection{CREMA-D}
+The Crowd-sourced Emotional Multi-modal Actors Database (CREMA-D) is a labelled multimodal for emotional analysis \cite{cao2014crema}. It contains 7,442 videos of speech acts from 91 actors of varying age and ethnicity. The database includes videos across seven emotions (Calm, Happy, Sad, Angry, Fearful, Disgust, Neutral) with scaled intensities. Surprised is notably missing from the emotional categories. The authors state that "surprise was not considered by the acting directors to be sufficiently specific, as it could relate to any of the other emotions with rapid onset" \cite{cao2014crema}. 
+
+The authors also provided the individual ratings for each video, which were collected from 2,443 crowd-sourced raters. These can also be used to analyse human bias in emotion recognition (see Section \ref{sec:human}).
+
+\subsubsection{MSP-IMPROV}
+MSP-IMPROV is an acted multimodal database for emotional analysis \cite{busso2016msp}. It covers four emotions (Anger, Happiness, Sadness, Neutral), where twelce actors (6 male, 6 female) were tasked to speak 15 different statements. While recording, the actors were set in different scenarios, in which the target sentences were included. Only the target sentence had to be spoken word-for-word, the buildup to the scenario was open to improvisation.
+
+652 recordings are provided on the target sentences. The authors also provide the statements on the entire improvised session, where 4,381 speaking turns are collected. 2,785 speaking turns were collected on natural interactions, where the actors were speaking normally to each other, outside of a scripted or improvised session. 620 turns were recorded on the target sentences alone, where the actors were tasked to read the statements in the provided emotion. This sums up the size of the MSP-IMPROV corpus to 7,818 recordings. 
+
+\subsubsection{IEMOCAP}
+The interactive emotional dyadic motion capture database (IEMOCAP) \cite{busso2008iemocap} is a labelled database based on dyadic interaction where one of the subjects is set up with motion capture software on their head, face and wrists. It is based on two types of interactions, acted and improvised.
+
+The database is gender balanced, with 5 male and female actors each. The actors were students from the Drama Department of the University of Southern California.
+
+The data was annotated by USC students. They labelled the utterances based on categorical expression (Neutral, Happiness, Sadness, Anger, Surprise, Fear, Disgust, Frustration, Excited, Other) and dimensional values for activation, valence, and dominance.
+
+In total, 5,255 scripted turns and 4,784 improvised turns were recorded. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{res/iemocap.png}
+    \caption{The motion capture points of IEMOCAP. They cover 53 points on the face, a wristband with two markers, one marker for each hand, and a headband with two markers. \cite{busso2008iemocap}}
+    \label{fig:iemocap_cap}
 \end{figure}
