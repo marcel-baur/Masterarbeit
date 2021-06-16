@@ -1,4 +1,4 @@
-\section{Building Models on Human Perception}
+\section{Advancing Existing FER Approaches}
 \label{sec:models}
 
 The previous section has yielded interesting results from human labelling (Section \ref{sec:human}). We concluded that a temporal dimension, and a lexical compensator might help in improving existing FER models for speaking subjects. 
@@ -28,7 +28,7 @@ To have a comparison between frame sizes and an estimation of the importance of 
 Lexical compensators can come in different shapes and forms. We will focus on the two previously mentioned approaches from Bursic \cite{bursic2020improving} and Busso \cite{salman2020style}, which attempt to extract lexical information in different ways.
 
 \paragraph{LipNet} 
-Bursic et al. \cite{bursic2020improving} used a LipNet embedding to detect the lexical content. We reproduced their approach to analyse the performance of the architecture, using our own MobileNet. The dataset of choice, similarly to the original model, was RAVDESS. The validation data consisted of all the recordings of actors 4, 5, 9, and 14.
+Bursic et al. \cite{bursic2020improving} used a LipNet embedding to detect the lexical content. We reproduced their approach to analyse the performance of the architecture, using our own MobileNet. The dataset of choice, similarly to the original model, was RAVDESS. The validation data consisted of all the recordings of actors 4 and 5.
 
 \paragraph{Style Extractor}
 The lexical compensator of Salman and Busso \cite{salman2020style} served as the inspiration for our own. However, we made some changes to the architecture and preprocessing of the style extractor. We turned to FaceMesh as a facial landmark detector, yielding 468 three-dimensional coordinates, 1404 inputs in total. We chose a smaller, non temporal architecture network, with only one hidden layer.
@@ -89,7 +89,7 @@ Each videos data is saved as an array in a \texttt{pickle} file. The structure o
 \end{figure}
 
 \paragraph{Data for the Style Extractor}
-To be able to train the style extractor we need pairs of meshes for every phoneme, where one mesh was emotional (not neutral) and one neutral. To have a more fine-grained model, we also wanted to make sure that all mesh pairs are from the same occurrence. As an example, the sentence "It's eleven \textbf{o}'cl\textbf{o}ck" has two occurrences of the phoneme \texttt{O} (marked). When training the style extractor, all mesh pairs came from the same actor in the same sentence at similar positions.
+To be able to train the style extractor we need pairs of meshes for every phoneme, where one mesh was emotional (not neutral) and one neutral. To have a more fine-grained model, we also wanted to make sure that all mesh pairs are from the same occurrence. As an example, the sentence "It's eleven \textbf{o}'cl\textbf{o}ck" has two occurrences of the phoneme \texttt{O} (marked). When training the style extractor, all mesh pairs came from the same actor in the same sentence at similar positions. We achieved this by using the MFA to align the video files. Phonetic transcripts that do not have neutral counterparts were ignored. This left us with around 140.000 phoneme pairings to train the style extractor with. 
 
 
 \subsection{Training}
@@ -99,12 +99,30 @@ To keep the models comparable on the temporal dimension, we trained each model o
 
 To get the most out of each video, we used a sliding window approach on the frame arrays. Given a model with a frame size of 60 and a video with 100 frames, we now have the opportunity to extract multiple data point from the video. We used a window stride of 5. This means that the first data point ranges from frame 0 to 59, the second from 5 to 64 and so on. This helped to somewhat ease the problem of the RAVDESS dataset being too small for proper DNN training. 
 
-Our specific feature extractor was trained separately. It was trained on CREMA-D, with actors 1 to 11 being used for validation.
+Our specific style extractor was trained separately. It was trained on CREMA-D, with actors 1 to 11 being used for validation.
 
-The fusion networks for all models was trained on RAVDESS. Actors 4, 5, 9, and 14 were used for the validation set, the files from the other 20 actors were used for training.
+The fusion networks for all models was trained on RAVDESS. Actors 4 and 5 were used for the validation set, the files from the other 22 actors were used for training.
+
+We used an early stopping and snapshot callback during training. If the validation loss dropped on three consecutive epochs, training was finished. The most accurate model on the validation set was saved and later used for further analysis in section \ref{sec:discussion}.
 
 \paragraph{Technical Details}
 We used the \texttt{keras} environment using a \texttt{tensorflow} backend (version 2.4.1) to train our models on a HPC using an Nvidia Titan X GPU with the Pascal architecture. The scripts were deployed in Docker containers, on a server running Ubuntu 18.04 LTS.
 
 \subsection{Results}
-In this chapter we will present the results of our training. More detailed results and discussion can be found in section \ref{sec:discussion}.
+\label{sec:model_results}
+In this chapter we will present the results of our training. More detailed results and discussion can be found in section \ref{sec:discussion}. The results in table \ref{tab:restab} show the accuracies of the validation data for each model on the respective frame window size. 
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{cccc}
+    \hline
+   \textbf{\# Frames}  & \textbf{LipNet}  & \textbf{Style Extractor}  & \textbf{No Compensator}  \\ \hline
+    1 & 0.66 & \textbf{0.67}  & 0.66 \\ 
+    30 & 0.67 & \textbf{0.71} & 0.70 \\ 
+    60 & 0.76 & 0.74 & \textbf{0.77} \\ 
+    90 & \textbf{0.84} & \textbf{0.84} & 0.83 \\ 
+\end{tabular}
+    \caption{Test data accuracy of the three different models trained on RAVDESS. The models with the highest accuracy in the frame group are indicated in bold.}
+    \label{tab:restab}
+\end{table}
+
+
