@@ -1,3 +1,4 @@
+\newpage
 \section{Background}
 \label{sec:related}
 
@@ -28,7 +29,7 @@ Activation functions can introduce non-linearity to a network. They can also bou
          Tanh & $\frac{e^x - e^{-x}}{e^x + e^{-x}}$ & $(-1, 1)$\\\hline
     \end{tabular}
     \caption{An overview of selected activation functions which we will use in our models (Section \ref{sec:models})}
-    \label{tab:my_label}
+    \label{tab:activation_funcs}
 \end{table}
 \egroup
 
@@ -69,7 +70,8 @@ NNs can be built in various different ways. Over time, researchers have develope
 \paragraph{VGG}
 Introduced by Simonyan and Zisserman in 2014 \cite{simonyan2015vgg}, VGG16 and VGG19 have established themselves as architectures for image classification, including facial expression recognition. VGG16 achieved top-5 finishes in the 2014 ImageNet Challenge in both localisation and classification tasks. A major drawback to models using the VGG architecture is its computing performance. Given its rather large architecture, it is comparatively slow to train. This is where we turn to \emph{MobileNets}.
 \paragraph{MobileNet}
-\emph{MobileNets} were originally introduced for mobile and embedded vision applications \cite{howard2017mobilenets}. They allow for hyperparameter tuning, where the developer is able to choose a fitting model size for his application based on two global hyperparameters. MobileNets trade off accuracy (and thus the need for many hidden layers) in favour of speed and efficiency. Our core facial expression recognition models are based on the MobileNet architecture.
+\label{sec:mobilenet}
+\emph{MobileNets} were originally introduced for mobile and embedded vision applications \cite{howard2017mobilenets}. They allow for hyperparameter tuning, where the developer is able to choose a fitting model size for his application based on two global hyperparameters. MobileNets trade off accuracy (and thus the need for many hidden layers) in favour of speed and efficiency. Our core facial expression recognition models are based on the MobileNet architecture (Section \ref{sec:fer_base}).
 
 
 \subsection{Emotional Models from Facial Expression}
@@ -129,23 +131,24 @@ Deep learning models can further be divided into two categories. The first one o
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{res/PipelinePrototype.pdf}
-    \caption{PROTOTYPE: An example of a FER pipeline. After extracting landmarks from the target image, models try to extract features from the given landmarks. These can be used to detect an emotion from the input.}
+    \caption{An example of a FER pipeline. After extracting landmarks from the target image, models try to extract features from the given landmarks. These can be used to detect an emotion from the input.}
     \label{fig:pipeline_fer}
 \end{figure}
 
 \subsection{Phonemes and Visemes}
 The content of an act of speech can be segmented into words, syllables, and \emph{phonemes} \cite{savin1970nonperceptual}. Languages differ in their amount of phonemes, with the New Guinean language Rotokas having 11, whereas the Namibias !Xóõ is using 160. English, the primary language we're be looking at in this thesis, has 37-41 phonemes, differing by dialect \cite{Hayes2009}. Phonemes are very important in FER. A speaking subjects face, and activated AUs, will be influenced by the lexical content of their speech, which is defined by the current phoneme. The face of a person in the act of pronouncing a phoneme will have a certain look to it. Several phonemes can be grouped together based on the distinct look they produce. These groups are called \emph{visemes}. There are several different phoneme-to-viseme mappings in research, with no concrete agreement on a 'best mapping' \cite{cappelletta2012viseme}.
 
-Visemes are particularly interesting for us, since our research is purely based in the visual domain. Differences between phonemes that are purely audiocentric are of no relevance for us. A viseme mapping reduces the categories for visually based lexical content, which makes building and training models easier.
+% Visemes are particularly interesting for us, since our research is purely based in the visual domain. Differences between phonemes that are purely audiocentric are of no relevance for us. A viseme mapping reduces the categories for visually based lexical content, which makes building and training models easier.
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\textwidth]{res/phoneme.png}
-    \caption{A visual example of three phonemes being spoken, together with their occurrence in a sentence.}
+    \includegraphics[width=0.8\textwidth]{res/phone_ex.pdf}
+    \caption{A visual example of three phonemes being spoken. Their occurrence in the sentence is highlighted by their respective colour.}
     \label{fig:phoneme_ex}
 \end{figure}
 
 \subsection{LipNet}
+\label{sec:lipnet_related}
 
 LipNet is an end-to-end sentence-level lipreading model that is based on visual data \cite{assael2016lipnet}. It specifically is not based on word classification, the authors stress the sentence-level lipreading comprehension. It operates on the character-level, combining CNNs with RNNs.
 
@@ -195,17 +198,29 @@ We will use the MFA to align our datasets and to get a precise phoneme-to-video 
     \caption{A pipeline of a classic use of the MFA. An audio file, together with its transcript gets fed into the MFA. The output of the aligner is a \texttt{TextGrid} file that contains timestamp information about word and phoneme occurrence in the input audio file.}
     \label{fig:mfa}
 \end{figure}
+
+\subsection{TAWNY Recording Tool}
+The TAWNY Recording Tool \cite{tawny2021} is a commercial service to create recordings for audio-visual databases, UX testing, market research projects, and other similar tasks. Each project is modular in nature and can be set up to fit the needs of customer. Participants in studies that use the tool are guided through a setup phase to assure proper camera, audio, and screen recording settings, depending on the needs of the project. 
+
+In the context of database collection, each single recording can be set up with preceding instructions. Participants can start the recording at their own pace, after familiarising themselves with the current task. Likewise, the recording stops at the participants will. The order of the individual recording tasks can be either preset by the customer or shuffled and randomised.
+
+The recordings are stored in their corresponding projects on the TAWNY Platform, which is a commercial SaaS tool to analyse recordings for their subjects affective state \cite{tawny2021platform}. Other than storage, we will not use the TAWNY Platform for its affective analysis.
+
+We will use the TAWNY Recording tool to collect our datasets in section \ref{sec:data}.
+
+\newpage
 \section{Related Work}
 In this section we will present existing datasets for FER and previous attempts at creating FER models that are robust against speech.
 
 \subsection{Datasets}
 There are many datasets that can be used to train models for FER. In this section we will present the datasets that we used in our models or are mentioned in our work.
 \subsubsection{AffectNet}
-\emph{AffectNet} \cite{mollahosseini2017affectnet} is one of the largest image databases for facial expression recognition. It consists of around 450,000 manually annotated images. Labellers classified them by eight emotional categories (Neutral, Happy, Sad, Surprise, Fear, Anger, Disgust, Contempt) while also providing continuous labels for valence and arousal. In addition to the labelled images, 1,000,000 images with facial landmarks are provided.
+\label{sec:affectnet}
+\emph{AffectNet} \cite{mollahosseini2017affectnet} is one of the largest image databases for facial expression recognition. It consists of around 450000 manually annotated images. Labellers classified them by eight emotional categories (Neutral, Happy, Sad, Surprise, Fear, Anger, Disgust, Contempt) while also providing continuous labels for valence and arousal. In addition to the labelled images, 1000000 images with facial landmarks are provided.
 
 The images were collected by scraping the internet through querying various search engines. Faces were recognized with the \emph{OpenCV} toolkit \cite{opencv_library}. Facial landmarks were extracted with regression of binary features \cite{ren2014face}. The 450,000 images were labelled by 12 full-time and part-time annotators who were knowledgeable on the issues of emotion and affect, and were specifically hired for the task. This was done to remove the issue of low-quality labels that occur with crowd-sourced methods. \cite{mollahosseini2017affectnet}
 
-Our classic FER models we will use are all trained on AffectNet.
+Our classic FER models we will use are all trained on AffectNet (Section \ref{sec:fer_base}).
 
 \subsubsection{RAVDESS}
 \label{sub:ravdess}
@@ -262,6 +277,30 @@ The data was annotated by USC students. They labelled the utterances based on ca
     \label{tab:dataset_summary}
 \end{table}
 
+\subsection{The Basis: The FER Model}
+\label{sec:fer_base}
+The FER model, which will build the basis of all our models in this thesis, is based on the MobileNetV2 architecture (Section \ref{sec:mobilenet}). The MobileNetV2 architecture was followed up by an AveragePooling2D layer, a flattening layer, and two dense layers of size 512 and 7 respectively. The last dense layer served as the output of the model. It was trained with 250000 images of the AffectNet corpus (Section \ref{sec:affectnet}). Its input is a facial crop of size 224x224x3. This facial crop is not designed for stretched faces, so the input images proportions have to be kept intact. The FER model is the largest part of our network with 2,9 million parameters, and yields an accuracy of 45\% on 3484 evenly distributed samples AffectNet corpus. Table \ref{tab:fer_base_acc} shows the accuracies by emotion. We can see disparities based on the underlying emotions, which will be propagated to the models we train later on in this section.
+
+We used the dense layer of size 512 as the embedding to be used for our upcoming models.
+
+\begin{table}
+    \centering
+    \begin{tabular}{c|ccccccc}
+        \textbf{Emotion} & \textbf{Precision} & \textbf{Precision} & \textbf{Precision} & \textbf{Accuracy \%}  \\ \hline
+         Neutral & 0.42 & 0.54 & 0.47 & 54\\
+         Happy & 0.76 & 0.82 & 0.79 & 81\\
+         Surprised & 0.43 & 0.56 & 0.46 & 56\\
+         Sad & 0.40 & 0.56 & 0.46  & 56\\
+         Angry & 0.37 & 0.64 & 0. 47 & 64\\
+         Fear & 0.17 & 0.03 & 0.05 & 3\\
+         Disgust & 0.00 & 0.00 & 0.00 & 0\\ \hline
+         
+    \end{tabular}
+    \caption{Performance metrics of the MobileNet FER model on a validation subset of the AffectNet corpus.}
+    \label{tab:fer_base_acc}
+\end{table}
+
+
 \subsection{Existing Approaches to Compensate Speech Effects}
 \label{sec:existing}
 There have already been advances in FER that accounts for speech. In this section, we will present three models that will be relevant to our work.
@@ -286,6 +325,7 @@ After 10 EM cycles, a style matrix $A^{*}$ will be produced. The emotion estimat
 Given that this approach requires facial landmarks and artificial mesh alrorithms were not as established at the time, the dataset of choice was IEMOCAP. This leads to the model only having four classes (Happiness, Anger, Sadness, Neutrality).
 
 \subsubsection{Lexical Compensation with LipNet}
+\label{sub:lip}
 Bursic et al. \cite{bursic2020improving} created a NN centered around lexical compensation using LipNet. While they present several approaches in their paper, we are most interested in their Lip Model, which is build by merging a LipNet embedding with an embedding of a classic VGG19 FER model. The models have also been temporalized, with several different frame batches ranging from 5 to 65 frames. Their best performing Lip Model was set at 60 frames per prediction, reaching an accuracy of 59.4\%. In comparison, the face-only RNN model that does not include lexical compensation from LipNet reached it's best accuracy at 40 frames and 48.5\%.
 
 The dataset used in this paper was RAVDESS, using the core emotions from Ekman, ignoring \emph{calm}. This makes for a good comparison to our models.
@@ -294,12 +334,13 @@ We will compare our experiments of using LipNet as a lexical compensator their r
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\textwidth]{res/bursicschema.pdf}
+    \includegraphics[width=0.8\textwidth]{res/lipnetpng.png}
     \caption{The schema of the Lip RNN by Bursic et al. \cite{bursic2020improving}.}
     \label{fig:bursic_schema}
 \end{figure}
 
 \subsubsection{Lexical Compensation using a Style Extractor}
+\label{sub:style}
 Salman and Busso \cite{salman2020style} have a similar approach to Bursic, using a lexical compensator alongside a feature extractor with an embedding of a classic FER model using the VGG16 architecture.
 
 The major point of interest is their style extractor/lexical compensator (see Figure \ref{fig:bussose}). It uses facial meshes of the subject instead of images, generalizing it against the subject. The model is trained on a temporal NN with one input and two outputs: an emotional mesh of a face serves as the input, producing a neutral mesh alongside a phoneme prediction. The idea is that the difference between the emotional input mesh and the neutral output mesh can give us information about the facial movements that are produced by emotional activations.
@@ -309,7 +350,7 @@ We will use a similar feature extractor in our experiments. Since Salman and Bus
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{res/BussoSE.pdf}
-    \caption{The schemal of Salman and Busso's lexical compensator. An emotional mesh is the input to a NN, producing a neutral output mesh alongside a phoneme prediction. The difference of the input mesh and the output mesh extracts the facial movements that are produced by the emotional state of the subject.}
+    \caption{The schema of Salman and Busso's lexical compensator. An emotional mesh is the input to a NN, producing a neutral output mesh alongside a phoneme prediction. The difference of the input mesh and the output mesh extracts the facial movements that are produced by the emotional state of the subject.}
     \label{fig:bussose}
 \end{figure}
 

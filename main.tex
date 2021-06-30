@@ -8,12 +8,13 @@
 \usepackage[T1]{fontenc} % sonst geht \hyphenation nicht mit Umlauten
 \usepackage{booktabs}
 \usepackage{listings}
+\usepackage[section]{placeins}
 %\usepackage[latin1]{inputenc} % man kann schreiben äöüß, statt "a"o"u"s
 \usepackage[utf8]{inputenc} % wie oben, aber UTF-8 als Encoding statt ISO-8859-1 (latin1)
 %\usepackage[ngerman,english]{babel} % deutsche Trennregeln, "Inhaltsverzeichnis" etc.
 % \usepackage{ngerman} % Alternative zum Babel-Paket oben
 % \usepackage{mathptmx} % Times-Roman-Schrift (auch für mathematische Formeln)
-\usepackage{tgpagella}
+\usepackage{tgpagella} % Nice font
 % Zum Setzen von URLs
 \usepackage{color}
 \definecolor{darkred}{rgb}{.25,0,0}
@@ -76,7 +77,7 @@ Prof.\ Dr.\ Heinrich Hußmann
 
 {\LARGE Increasing Robustness of Facial Expression Recognition against Speech}\vspace{1cm}
 
-{\large Marcel Baur}\\\href{mailto:marcel.baur@campus.lmu.de}{marcel.baur@campus.lmu.de}
+{\large Marcel Emre Baur}\\\href{mailto:marcel.baur@campus.lmu.de}{marcel.baur@campus.lmu.de}
 
 \end{center}
 \vfill
@@ -90,20 +91,38 @@ Verantw. Hochschullehrer: & Prof. Hußmann
 %______________________________________________________________________
 
 \clearpage
-% \section*{Zusammenfassung}
+\section*{Zusammenfassung}
+Die Erkennung menschlicher Emotionen spielt eine wichtige Rolle in verschiedene Sektoren, unter Anderem der Marktforschung. Der emotionale und affektive Zustand einer Person kann Aufschluss über ihren Einfluss verschiedener Stimuli wie Werbung, Markendesign oder Benutzererfahrung geben. Moderne Modelle können die menschliche Emotion mit robuster Genauigkeit erkennen, wenn bestimmte kontextuelle Einschränkungen gegeben sind. Eine dieser Einschränkungen ist, dass die Person nicht spricht und alle Aktivierungen der Gesichtsmuskeln durch den emotionalen Zustand der Person zustande kommen.
+
+
+In dieser Arbeit werden wir die menschliche Fähigkeit zur Erkennung von Emotionen bei sprechenden Personen untersuchen und auf das Potenzial für temporale und lexikalische Kompensation in unseren Modellen schließen. Wir werden drei Ansätze vorstellen, um bestehende Emotionserkennungsmodelle gegenüber sprechenden Personen durch temporale neuronale Netze und lexikalische Kompensation robuster zu gestalten. Unsere experimentellen Ergebnisse deuten darauf hin, dass die temporale Kompensation den größten Teil des Spracheffekts kompensieren würde und dass die lexikalische Kompensation nur marginale Leistungsgewinne bringt. In Echtweldanwendungen ist jedoch Vorsicht geboten, da die zusätzliche Einflüsse durch Beleuchtung, Sichtwinkel und Sprache die Leistung der Modelle beeinträchtigen kann.
+
+Zukünftige Arbeiten sollten sich darauf konzentrieren, diese Probleme zu beheben und die Leistung der Modelle gegenüber verrauschten Eingaben zu erhöhen.
+
+% In dieser Arbeit stellen wir drei Ansätze vor, um bestehende Emotionserkennungsmodelle gegenüber sprechenden Personen durch temporale neuronale Netze und lexikalische Kompensatoren robuster zu gestalten. Wir werden diese Ansätze implementieren und vergleichen, und Schlussfolgerungen zu ihrer individuellen Effektivität und Verwendbarkeit ziehen.
 
 % Kurzzusammenfassung der Arbeit, maximal 250 Wörter.
 
 % \selectlanguage{english}
 \section*{Abstract}
 
-Short abstract of the work, maximum of 250 words.
+Facial expression recognition for detecting human emotion plays an important role for different sectors and industries like market research. The emotional and affective state of a person can give insights into their impression to varying stimuli like advertisements, brand design or user experience. Current state-of-the-art models can detect the human emotion with robust accuracy, given certain contextual constraints. One such constraint is that the subject is not talking, and all facial movements are induced by the subjects emotional state.
+
+% In this thesis we present three approaches to increase the robustness of facial expression recognition model against speaking subjects through temporal neural networks and lexical compensation. We will implement and compare these approaches, and draw conclusions on their individual effectiveness and usability. 
+In this thesis we will explore the ability of human annotators to recognise emotion in speaking subjects and conclude the potential for temporal and lexical compensation in our models. We will present three approaches to increase the robustness of facial expression recognition models against speaking subjects through temporal neural networks and lexical compensation. Our experimental results suggest that temporal compensation would compensate for most of the speech effect and that lexical compensation only yield marginal gains in performance. However in real applications it is important to be careful as shifting domains through illumination, pose and language can harm the performance of the models.
+
+Future work should focus on alleviating these concerns, and increase the performance of model against noisy inputs.
+
 
 % \selectlanguage{ngerman}
 \clearpage
 \section*{Aufgabenstellung}
 
-Kopie der Original-Aufgabenstellung
+Facial Expression Recognition (FER) models allow to classify facial expressions into affective categories like anger, fear, happiness etc.
+Current approaches are mostly single-frame based and offer high accuracy.
+However, in the context of speech or song, face morphology is not only influenced by emotional expressions but also by vocal activity.
+The goal of this thesis is to explore the effect of vocal activity on FER and how to increase robustness of corresponding models.
+The core tasks are to (1) provide insights into the underlying concepts of affective computing and vocal activity, (2) evaluate existing data sets and approaches and (3) implement a FER model with focus on robustness against speech.
 
 \vfill % Sorgt dafür, dass das Folgende an das Seitenende rutscht
 
@@ -148,7 +167,7 @@ sowie alle benutzten Quellen und Hilfsmittel angegeben habe.
 \input{chapters/models.tex}
 \input{chapters/data.tex}
 % \chapter{Conclusions}
-\input{chapters/discussion.tex}
+% \input{chapters/discussion.tex}
 \input{chapters/conclusion.tex}
 
 %______________________________________________________________________
@@ -156,6 +175,12 @@ sowie alle benutzten Quellen und Hilfsmittel angegeben habe.
 \cleardoublepage
 \fancyhead[LE,RO,LO,RE]{} % Keine Kopfzeile mehr oben auf jeder Seite
 \section*{Inhalt der beigelegten CD}
+
+\begin{itemize}
+    \item Codebase
+    \item PDFs of papers and resources used for this thesis which are freely available online
+    \item Video recordings for the German RAVDESS and Improvised database from section \ref{sec:data}
+\end{itemize}
 %______________________________________________________________________
 
 \cleardoublepage

@@ -1,1 +1,44 @@
+\newpage
 \section{Conclusion}
+\label{sec:conclusion}
+In this section we will draw our conclusions to the work in this thesis, and offer topics for future work.
+
+\subsection{The Effect of Modalities}
+We have trained and validated three models across four steps along the temporal dimension in this thesis. One model purely builds on an existing FER model, while the other two include a lexical compensator. We now want to summarise their impact and performance.
+
+\paragraph{Temporal Dimension}
+The addition of the temporal dimension has shown the greatest increase in accuracy on all our models. While a single-frame model correctly predicted the underlying emotion of the input in two out of three cases (66\% to 67\%), the models that classified a sequence of 90 frames did so in more than four out of five cases (83\% to 84\%). Temporal compensation is a major key in building FER models that are robust against speaking subjects.
+
+\paragraph{Lexical Compensation}
+Two of our models included a lexical compensator. The first of these models used an embedding of the LipNet model to include information about the lexical content of the subjects speech. The other model used a tailored style extractor that indicated the facial movements related to emotion and filter out those that came from the lexical content. While both models did not significantly outperform the temporalized FER model on any frame-window size, the model using the style extractor has shown promise and can outperform the other models with more refinement and training. The LipNet model struggled to transfer its performance in the training steps to other databases. On CREMA-D and on German-RAVDESS it struggled to replicate the increase in accuracy with larger frame-window sizes. Overall we can conclude that a lexical compensator that was built for the task of FER is more beneficial when building models that are robust against speech.
+
+\subsection{The Link to Human FER}
+In section \ref{sec:human} we analysed the abilities of human annotators in FER. Humans perform significantly better on videos compared to single frames (Figure \ref{fig:setting_overview}), which we replicated in our models through temporal compensation.
+
+The second conclusion from our initial experiments was that human annotators had consistent accuracy when labelling images independent of the phoneme (Figure \ref{fig:phone_model_human}). We attempted to reproduce this effect with our lexical compensators. Our models did however still have significant variance across the phonemes (Figure \ref{fig:phone_acc_ravdess}).
+
+\subsection{Real World Application}
+The models we have built have been tested on artificial datasets, where one input video had a specific emotional label. This is not the case in real world scenarios. In those cases our models should be the source of the emotional label, which requires more nuance in predicting the emotions for a given sequence. While our models increase in accuracy with larger frame-window sizes, we need to consider that an emotional expression does not last up to 90 frames, which is three seconds in a video at 30 frames per second. An emotional state that expresses itself in only a small subset of this window might go undetected. In this case, a smaller frame-window size is more beneficial, and a drop in accuracy might have to be taken. As mentioned in section  \ref{sub:computational}, not all models perform similarly based in regards to computation time. A real-time application might need to prioritise a more efficient model, even though it might not be as accurate.
+
+Estimations using a temporal model can also be applied using a sliding window approach. The model using 90 frames can analyse a video with a stride of 30 frames, a one second equivalent. This produces overlapping results, which can be further analysed and used for aggregated results.
+
+The selection of the "right" model depends on the context in which it will be used in. In a scenario where only images are available, it would be required to use one of the single frame models and forego the temporal dimension. Very short clips might also not be able to use the full extend of the temporal dimension. Like we have seen with validating the CREMA-D corpus in section \ref{sec:cross_dataset}, clips with less than 90 frames could not be analysed with the 90-frame model.
+
+\subsection{Future Work}
+
+\paragraph{Cross-Dataset Training}
+Our models have all been trained on the RAVDESS database. This has yielded promising results in immediate validation on the same dataset, but it did not fully transfer on other datasets like CREMA-D. A model that is robust in real world scenarios needs to be trained on more diverse datasets, or on a combination of already existing ones. Other aspects that do not show up in those datasets have to be considered as well. CREMA-D and RAVDESS both recorded their actors with a camara facing them head on, in very good quality and with greenscreens behind them. This cannot be guaranteed in in-the-wild situations. Subjects might be recorded from different angles, move their hands while being recorded and thus occlude the face. The video quality is also not stable, since under- and overexposed videos can lead to a decrease in performance. Situations like these can lead to substantial noise, and need to be considered when training the models.
+
+\paragraph{Style Extractor}
+Our style extractor has shown promising results in section \ref{sec:models}. We have used a very simple architecture with one hidden layer of size 128 to transform a mesh representation of an emotional face into its neutral counterpart. While the results have shown the potential of this approach, there is still room for improvement. We trained our style extractor on the CREMA-D corpus. As a consequence, the \texttt{surprised} emotion could not be considered. Furthermore, we did not include a \texttt{neutral} to \texttt{neutral} transformation when training the style extractor, which might have lead to the model struggling with \texttt{neutral} classification. Training the style extractor on a corpus that includes all emotions that will be classified with the final FER model will increase the performance of the model. Other mesh extractors than FaceMesh could also be explored to definitively conclude the choice of preprocessor. 
+
+\paragraph{Multilingual}
+Our analysis of multilingual datasets and the performance of our models on them has not been definitively conclusive. While a ten percentage point decrease in accuracy occurred, we could not point it down to the switch in language. The reason for this were other differences in the two datasets we used to compare the language switch.To more accurately explore the differences in the language domain for the models, we would need a dataset that includes recordings both in English and another language. The setting, actors, and postprocessing would have to be the same to reduce side effects that would reduce the comparability. Those constraints would reduce the differences between the two language recordings in the dataset to a minimum outside of the domain switch between languages. 
+
+Another point in multilingual analysis is the impact of a certain language. Is there any significant difference in performance in the switch from English to German or English to another language? How do the languages compare? A more expansive dataset that has been collected for this purpose can help to answer these questions more conclusively.
+
+\paragraph{Real World Speech Acts}
+In section \ref{sec:rwsa} we collected recordings from real world speech acts. Unfortunately they were not enough recordings for conclusive analysis. We now want to propose methods that can be used to analyse the application of models on real world scenarios.
+
+The collected recordings from section \ref{sec:rwsa} were not induced by emotion. The actors were put in a scenario where they had to react to a given situation, more closely resembling real world speech. Since there were no predefined emotions, the recordings would need to be labelled in postprocessing. By then validating the models on this dataset, one can get a better idea on how the models perform in in-the-wild situations without scripted statements.
+
