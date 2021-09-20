@@ -18,7 +18,7 @@ To have a comparison between frame sizes and an estimation of the importance of 
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\textwidth]{res/temporalization.pdf}
+    \includegraphics[width=0.8\textwidth]{res/png_backup/temporalisation.png}
     \caption{Temporalizing an FER model. The existing model gets wrapped in a TimeDimensional layer. That way the model produces $n$ embeddings for $n$ inputs.}
     \label{fig:temporalization}
 \end{figure}
@@ -44,7 +44,7 @@ The dataset used to train this model, like in the original paper, was CREMA-D.
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\textwidth]{res/FExtractor.pdf}
+    \includegraphics[width=0.5\textwidth]{res/png_backup/styleex.png}
     \caption{The architecture of our final feature extractor. The emotional input mesh of a subject speaking a given phoneme $p$ gets passed to a densely connected hidden layer with 128 neurons. The output of the network is a prediction of a neutral mesh of the actor pronouncing the same phoneme $p$.}
     \label{fig:fextractor}
 \end{figure}
@@ -70,7 +70,7 @@ We end up with three main architectures, which we will train, validate, and comp
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.7\textwidth]{res/FusionLayers.pdf}
+    \includegraphics[width=0.7\textwidth]{res/png_backup/fusion.png}
     \caption{The architecture of the fusion/transfer network. It is kept simple to accommodate the smaller datasets we use and follows the architecture from Bursic et al. \cite{bursic2020improving}.}
     \label{fig:fusionlayers}
 \end{figure}
@@ -84,14 +84,14 @@ The LipNet model required a 100x50x3 dimensional input of the orofacial area. Th
 Each videos data is saved as an array in a \texttt{pickle} file. The structure of the file can be seen in figure \ref{fig:pickle}.
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\textwidth]{res/Pickle.pdf}
+    \includegraphics[width=0.5\textwidth]{res/png_backup/pickle.png}
     \caption{The data structure of our preprocessed files. Each file corresponds to one video. Its facial and orofacial crops, alongside with its facial landmarks are stored in arrays. The array lengths correspond to the amount of frames in each video. The underlying emotion is saved as well.}
     \label{fig:pickle}
 \end{figure}
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\textwidth]{res/croppng.png}
+    \includegraphics[width=0.8\textwidth]{res/png_backup/crop.png}
     \caption{The input for the FER model had to be a crop of the subjects face, with a dimension of 244x244 pixels. It was important not to stretch the original crop and keep the proportions. We extended the facial bounding box to fit it to the required dimensions.}
     \label{fig:crop}
 \end{figure}

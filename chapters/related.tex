@@ -54,7 +54,7 @@ Pooling layers are used to decrease the size of the layers and create a more eff
 
 \begin{figure}
     \centering
-    \includegraphics{res/pooling.pdf}
+    \includegraphics[width=0.8\textwidth]{res/png_backup/pool.png}
     \caption{An example of a MaxPooling layer working on the left matrix with a window size of 2 x 2 and a stride of 2, producing the matrix on the right.}
     \label{fig:pooling}
 \end{figure}
@@ -130,7 +130,7 @@ Deep learning models can further be divided into two categories. The first one o
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\textwidth]{res/PipelinePrototype.pdf}
+    \includegraphics[width=0.8\textwidth]{res/png_backup/mfa.png}
     \caption{An example of a FER pipeline. After extracting landmarks from the target image, models try to extract features from the given landmarks. These can be used to detect an emotion from the input.}
     \label{fig:pipeline_fer}
 \end{figure}
@@ -142,7 +142,7 @@ The content of an act of speech can be segmented into words, syllables, and \emp
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\textwidth]{res/phone_ex.pdf}
+    \includegraphics[width=0.8\textwidth]{res/png_backup/phoneex.png}
     \caption{A visual example of three phonemes being spoken. Their occurrence in the sentence is highlighted by their respective colour.}
     \label{fig:phoneme_ex}
 \end{figure}
@@ -194,7 +194,7 @@ We will use the MFA to align our datasets and to get a precise phoneme-to-video 
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\textwidth]{res/mfa.pdf}
+    \includegraphics[width=0.5\textwidth]{res/png_backup/mfapipeline.png}
     \caption{A pipeline of a classic use of the MFA. An audio file, together with its transcript gets fed into the MFA. The output of the aligner is a \texttt{TextGrid} file that contains timestamp information about word and phoneme occurrence in the input audio file.}
     \label{fig:mfa}
 \end{figure}
@@ -326,7 +326,7 @@ Given that this approach requires facial landmarks and artificial mesh alrorithm
 
 \subsubsection{Lexical Compensation with LipNet}
 \label{sub:lip}
-Bursic et al. \cite{bursic2020improving} created a NN centered around lexical compensation using LipNet. While they present several approaches in their paper, we are most interested in their Lip Model, which is build by merging a LipNet embedding with an embedding of a classic VGG19 FER model. The models have also been temporalized, with several different frame batches ranging from 5 to 65 frames. Their best performing Lip Model was set at 60 frames per prediction, reaching an accuracy of 59.4\%. In comparison, the face-only RNN model that does not include lexical compensation from LipNet reached it's best accuracy at 40 frames and 48.5\%.
+Bursic et al. \cite{bursic2020improving} created a NN centered around lexical compensation using LipNet. While they present several approaches in their paper, we are most interested in their Lip Model, which is build by merging a LipNet embedding with an embedding of a classic VGG19 FER model (Figure \ref{fig:bursic_schema}). The models have also been temporalized, with several different frame batches ranging from 5 to 65 frames. Their best performing Lip Model was set at 60 frames per prediction, reaching an accuracy of 59.4\%. In comparison, the face-only RNN model that does not include lexical compensation from LipNet reached it's best accuracy at 40 frames and 48.5\%.
 
 The dataset used in this paper was RAVDESS, using the core emotions from Ekman, ignoring \emph{calm}. This makes for a good comparison to our models.
 
@@ -349,7 +349,7 @@ We will use a similar feature extractor in our experiments. Since Salman and Bus
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\textwidth]{res/BussoSE.pdf}
+    \includegraphics[width=0.8\textwidth]{res/png_backup/styleexbusso.png}
     \caption{The schema of Salman and Busso's lexical compensator. An emotional mesh is the input to a NN, producing a neutral output mesh alongside a phoneme prediction. The difference of the input mesh and the output mesh extracts the facial movements that are produced by the emotional state of the subject.}
     \label{fig:bussose}
 \end{figure}
